@@ -32,7 +32,11 @@ Pkmn(String auth, String user, String password, String location, String steps)
 	}	
 public void run () throws Exception
 {
-    Process p = Runtime.getRuntime().exec("cmd /K");
+	 String[] command =
+    {
+        "cmd",
+    };
+    Process p = Runtime.getRuntime().exec(command);
 	new Thread(new SyncPipe(p.getErrorStream(), System.err)).start();
     new Thread(new SyncPipe(p.getInputStream(), System.out)).start();
     PrintWriter stdin = new PrintWriter(p.getOutputStream());
@@ -40,8 +44,8 @@ public void run () throws Exception
 	stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l \"" + location + "\" -st " + steps + " -dg -ol -ar 3");
     stdin.close();
 
-  //  int returnCode = p.waitFor();
-  //  System.out.println("Return code = " + returnCode);
+    int returnCode = p.waitFor();
+    System.out.println("Return code = " + returnCode);
 }
 	
 }
