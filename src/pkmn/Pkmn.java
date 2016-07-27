@@ -32,17 +32,16 @@ Pkmn(String auth, String user, String password, String location, String steps)
 	}	
 public void run () throws Exception
 {
-	 String[] command =
-    {
-        "cmd",
-    };
-    Process p = Runtime.getRuntime().exec(command);
+    Runtime rt = Runtime.getRuntime();
+	Process p = rt.exec("cmd");
 	new Thread(new SyncPipe(p.getErrorStream(), System.err)).start();
     new Thread(new SyncPipe(p.getInputStream(), System.out)).start();
     PrintWriter stdin = new PrintWriter(p.getOutputStream());
-    stdin.println("cd \"C:\\Users\\Bambi^\\Downloads\\PokemonGo-Map-master\\\"");
-	stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l \"" + location + "\" -st " + steps + " -dg -ol -ar 3");
-    stdin.close();
+	stdin.println("cd \"C:\\Users\\Bambi^\\Downloads\\PokemonGo-Map-master\\\"");
+//	stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " -dg -ol -ar 3");
+	stdin.println("start cmd /k  python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l \"" + location + "\" -st " + steps + " -dg -ol -ar 3");
+
+stdin.close();
 
     int returnCode = p.waitFor();
     System.out.println("Return code = " + returnCode);
