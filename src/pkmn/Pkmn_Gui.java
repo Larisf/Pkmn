@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 public class Pkmn_Gui extends Application
 {
 	Buttons btn = new Buttons();
+	public Pkmn_Gui(){}
 	@Override
 	public void start(Stage primaryStage) throws InterruptedException 
 	{
@@ -72,7 +73,7 @@ public class Pkmn_Gui extends Application
 		{
 			public void handle(ActionEvent event)
 			{
-				btn = new Buttons(auth, user, pass, location, radius, autoRefresh, webEngine, gym, lured);
+				btn = new Buttons(auth, user, pass, location, radius, autoRefresh, webEngine, gym, lured, console);
 				btn.start();
 			}
 		});

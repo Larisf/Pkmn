@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 
@@ -28,11 +29,12 @@ public class Buttons
 	private WebEngine webEngine;
 	private CheckBox gym;
 	private CheckBox lured;
+	private TextArea console;
 	
 	public Buttons()
 	{
 	}
-	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh, WebEngine webEngine, CheckBox gym, CheckBox lured)
+	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh, WebEngine webEngine, CheckBox gym, CheckBox lured, TextArea console)
 	{
 		this.auth = auth;
 		this.user = user;
@@ -43,6 +45,7 @@ public class Buttons
 		this.webEngine = webEngine;
 		this.gym = gym;
 		this.lured = lured;
+		this.console = console;
 	}
 	public Buttons(WebEngine webEngine)
 	{
@@ -50,7 +53,7 @@ public class Buttons
 	}
 	public void start()
 	{
-		Pkmn pkmn = new Pkmn(auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured());	
+		Pkmn pkmn = new Pkmn(auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console);	
 		try {
 			pkmn.run();
 		} catch (Exception ex) {
@@ -91,7 +94,6 @@ public class Buttons
 		else
 			aLured = "";
 		return aLured;
-	}
-	
+	}	
 }
 	

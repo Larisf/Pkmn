@@ -7,6 +7,7 @@ package pkmn;
 
 
 import java.io.PrintWriter;
+import javafx.scene.control.TextArea;
 
 /**
  *
@@ -26,7 +27,8 @@ public class Pkmn
 	private String refresh = null;
 	private String gym = null;
 	private String lured = null;
-	Pkmn(String auth, String user, String password, String location, String steps,String refresh, String bGym, String bLured)
+	TextArea console;
+	Pkmn(String auth, String user, String password, String location, String steps,String refresh, String bGym, String bLured, TextArea console)
 		{
 			this.auth = auth;
 			this.user = user;
@@ -36,12 +38,14 @@ public class Pkmn
 			this.refresh = refresh;
 			this.gym = bGym;
 			this.lured = bLured;
-		}	
+			this.console = console;
+		}
+	
 		public void run () throws Exception
 		{
 	    Runtime rt = Runtime.getRuntime();
 		Process p = rt.exec("cmd");
-		Thread error = new Thread(new SyncPipe(p.getErrorStream(), System.err));
+		Thread error = new Thread(new SyncPipe(p.getErrorStream(), System.out));
 		error.start();
 		Thread out = new Thread(new SyncPipe(p.getInputStream(), System.out));
 		out.start();
