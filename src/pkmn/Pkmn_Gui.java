@@ -16,8 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
@@ -28,10 +28,13 @@ import javafx.stage.Stage;
  *
  * @author Bambi^
  */
-public class Pkmn_Gui extends Application {
+public class Pkmn_Gui extends Application
+{
+	Buttons btn = new Buttons();
 	@Override
 	public void start(Stage primaryStage) throws InterruptedException 
 	{
+		
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10.0));
         grid.setVgap(5.0);
@@ -46,10 +49,9 @@ public class Pkmn_Gui extends Application {
 		Label l7 = new Label("Ip: ");
 		Label l8 = new Label("Port: ");
 		Label l9 = new Label("Arenen anzeigen: ");
-		Label l10 = new Label("Pokestops anzeigen: ");
 		Label l11 = new Label("Nur Lock-Module anzeigen: ");
 		
-		
+		TextArea console = new TextArea("");
         TextField auth = new TextField("");
         TextField user = new TextField("");
         PasswordField pass = new PasswordField();
@@ -60,56 +62,45 @@ public class Pkmn_Gui extends Application {
 		TextField port = new TextField("");
 		
 		CheckBox gym = new CheckBox();
-		CheckBox stop = new CheckBox();
 		CheckBox lured = new CheckBox();
 		
 		WebView browser = new WebView();
 		WebEngine webEngine =  browser.getEngine();
-		ListView lv = new ListView();
-		
+
         Button start = new Button("Start");
 		start.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent event)
 			{
-				Pkmn pkmn = new Pkmn(auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText());	
-				try {
-					pkmn.run();
-				} catch (Exception ex) {
-					Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
-				}
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException ex) {
-					Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
-				}
-					webEngine.load("http://127.0.0.1:5000");
+				btn = new Buttons(auth, user, pass, location, radius, autoRefresh, webEngine, gym, lured);
+				btn.start();
 			}
 		});
+		
 		Button refresh = new Button("Refresh");
 		refresh.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent event)
 			{
-					webEngine.load("http://127.0.0.1:5000");
-        	}
+				btn = new Buttons(webEngine);
+				btn.refresh();
+			}
 		});
+		
 		Button stopp = new Button("Beenden");
 		stopp.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent event)
 			{
-					Runtime rt = Runtime.getRuntime();
 				try {
-					rt.exec("taskkill /F /IM cmd.exe");
+					btn.stopp();
 				} catch (IOException ex) {
 					Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
 				}
-				System.exit(0);
         	}
 		});
 
-        grid.add(browser, 0, 0, 1, 12);
+        grid.add(browser, 0, 0, 1, 15);
         grid.add(l1, 1 ,0);
         grid.add(l2, 1, 1);
 		grid.add(l3, 1, 2);
@@ -119,8 +110,7 @@ public class Pkmn_Gui extends Application {
 		grid.add(l7, 1, 6);
 		grid.add(l8, 1, 7);
 		grid.add(l9, 1, 8);
-		grid.add(l10,1, 9);
-		grid.add(l11,1, 10);
+		grid.add(l11,1, 9);
         grid.add(auth, 2, 0);
         grid.add(user, 2, 1);
         grid.add(pass, 2, 2);
@@ -130,27 +120,18 @@ public class Pkmn_Gui extends Application {
 		grid.add(ip, 2,6);
 		grid.add(port,2,7);
 		grid.add(gym, 2,8);
-		grid.add(stop, 2,9);
-		grid.add(lured,2,10);
+		grid.add(lured,2,9);
         grid.add(start, 2, 12);
 		grid.add(refresh,1, 12);
 		grid.add(stopp,3,12);
-         
-		
-		
-        Scene scene = new Scene(grid);
+		grid.add(console,0,16);
+        
+		Scene scene = new Scene(grid);
         primaryStage.setTitle("PokemonGo Map");
         primaryStage.setScene(scene);
-        primaryStage.show();
-        
-		
+        primaryStage.show();		
 	}
-
-	/**
-	 * @param args the command line arguments
-	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
 }

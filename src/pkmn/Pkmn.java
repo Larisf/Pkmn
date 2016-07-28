@@ -12,7 +12,8 @@ import java.io.PrintWriter;
  *
  * @author Bambi^
  */
-public class Pkmn {
+public class Pkmn
+{
 
 	/**
 	 * @param args the command line arguments
@@ -22,29 +23,31 @@ public class Pkmn {
 	private String password = null;
 	private String location = null;
 	private String steps = null;
-Pkmn(String auth, String user, String password, String location, String steps)
-	{
-		this.auth = auth;
-		this.user = user;
-		this.password = password;
-		this.location = location;
-		this.steps = steps;
-	}	
-public void run () throws Exception
-{
-    Runtime rt = Runtime.getRuntime();
-	Process p = rt.exec("cmd");
-	new Thread(new SyncPipe(p.getErrorStream(), System.err)).start();
-    new Thread(new SyncPipe(p.getInputStream(), System.out)).start();
-    PrintWriter stdin = new PrintWriter(p.getOutputStream());
-	stdin.println("cd \"C:\\Users\\Bambi^\\Downloads\\PokemonGo-Map-master\\\"");
-//	stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " -dg -ol -ar 3");
-	stdin.println("start cmd /k  python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l \"" + location + "\" -st " + steps + " -dg -ol -ar 3");
-
-stdin.close();
-
-    int returnCode = p.waitFor();
-    System.out.println("Return code = " + returnCode);
-}
+	private String refresh = null;
+	private String gym = null;
+	private String lured = null;
+	Pkmn(String auth, String user, String password, String location, String steps,String refresh, String bGym, String bLured)
+		{
+			this.auth = auth;
+			this.user = user;
+			this.password = password;
+			this.location = location;
+			this.steps = steps;
+			this.refresh = refresh;
+			this.gym = bGym;
+			this.lured = bLured;
+		}	
+		public void run () throws Exception
+		{
+	    Runtime rt = Runtime.getRuntime();
+		Process p = rt.exec("cmd");
+		new Thread(new SyncPipe(p.getErrorStream(), System.err)).start();
+		new Thread(new SyncPipe(p.getInputStream(), System.out)).start();
+	    PrintWriter stdin = new PrintWriter(p.getOutputStream());
+		stdin.println("cd \"C:\\Users\\Bambi^\\Downloads\\PokemonGo-Map-master\\\"");
+	//	stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " -dg -ol -ar 3");
+		stdin.println("start cmd /k  python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l \"" + location + "\" -st " + steps+ " " + gym +" "+ lured + " -ar "+ refresh);
+		stdin.close();
+	}
 	
 }
