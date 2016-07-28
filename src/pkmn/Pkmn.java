@@ -41,12 +41,15 @@ public class Pkmn
 		{
 	    Runtime rt = Runtime.getRuntime();
 		Process p = rt.exec("cmd");
-		new Thread(new SyncPipe(p.getErrorStream(), System.err)).start();
-		new Thread(new SyncPipe(p.getInputStream(), System.out)).start();
+		Thread error = new Thread(new SyncPipe(p.getErrorStream(), System.err));
+		error.start();
+		Thread out = new Thread(new SyncPipe(p.getInputStream(), System.out));
+		out.start();
 	    PrintWriter stdin = new PrintWriter(p.getOutputStream());
 		stdin.println("cd \"C:\\Users\\Bambi^\\Downloads\\PokemonGo-Map-master\\\"");
-	//	stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " -dg -ol -ar 3");
-		stdin.println("start cmd /k  python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l \"" + location + "\" -st " + steps+ " " + gym +" "+ lured + " -ar "+ refresh);
+		stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " "+ gym+ " "+ lured + " -ar "+ refresh);
+		//stdin.println("start cmd /k  python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l \"" + location + "\" -st " + steps+ " " + gym +" "+ lured + " -ar "+ refresh);
+		//stdin.println("start cmd /k python runserver.py -a ptc -u pralinaa1 -p fisch123 -l \"400 Broad St, Seattle, WA 98109, USA\" -st 5 -ar 10");
 		stdin.close();
 	}
 	

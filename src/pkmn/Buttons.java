@@ -63,9 +63,16 @@ public class Buttons
 	}
 	public void stopp() throws IOException
 	{
-		Runtime rt = Runtime.getRuntime();
-		rt.exec("taskkill /F /IM cmd.exe");
-		System.exit(0);
+		try
+		{
+			Runtime.getRuntime().exec("taskkill /F /IM Python.exe");
+			Runtime.getRuntime().exec("taskkill /F /IM cmd.exe");
+		} 
+		catch (IOException ex) 
+		{
+			Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		//System.exit(0);
 	}
 	public String getGym()
 	{
