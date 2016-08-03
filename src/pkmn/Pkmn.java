@@ -35,7 +35,7 @@ public class Pkmn
 			this.path = path;
 		}
 	
-	public void run () throws IOException
+	public void run () throws IOException, InterruptedException
 		{
 	    Runtime rt = Runtime.getRuntime();
 		Process p = rt.exec("cmd");
@@ -63,5 +63,6 @@ public class Pkmn
 				else console.appendText("Bitte Passwort eingeben!\n");
 			else console.appendText("Bitte Account namen eingeben!\n");
 		else console.appendText("Bitte google oder ptc eingeben!\n");
-        }	
+        stdin.close();
+		}	
 }

@@ -30,6 +30,8 @@ public class Buttons
 	private TextArea console;
 	private Stage primaryStage;
 	private String path;
+	private Boolean first = true;
+		
 	
 	public Buttons(){}
 	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh, WebEngine webEngine, CheckBox gym, CheckBox lured, TextArea console, String path)
@@ -58,12 +60,11 @@ public class Buttons
 	}
 	public void start()
 	{
-	//	if (path == null) console.appendText("Kein Dateipfad angegeben!\n"+path+"\n");
-	//	else 
+		if (path == null) console.appendText("Kein Dateipfad angegeben!\n");
+		else 
 		{
 		try 
-		{
-			
+		{	
 			Pkmn pkmn = new Pkmn(auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path);
 			pkmn.run();
 		}
@@ -79,12 +80,17 @@ public class Buttons
 		{
 			Logger.getLogger(Buttons.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		}
-		
+		}	
 	}
 	public void refresh()
 	{
-		webEngine.load("http://127.0.0.1:5000");
+		if (first == true)
+		{
+			webEngine.load("http://127.0.0.1:5000");
+			first = false;
+		}
+		else
+			webEngine.reload();
 	}
 	public void stopp() throws IOException
 	{
