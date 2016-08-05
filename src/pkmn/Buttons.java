@@ -1,9 +1,8 @@
 package pkmn;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.CheckBox;
@@ -16,25 +15,27 @@ import javafx.stage.Stage;
 
 public class Buttons 
 {
-	private TextField auth;
-	private TextField user;
-	private TextField location;
-	private TextField radius;
-	private TextField autoRefresh;
-	private TextField ip;
-	private TextField port;
-	private PasswordField pass;
-	private WebEngine webEngine;
-	private CheckBox gym;
-	private CheckBox lured;
-	private TextArea console;
-	private Stage primaryStage;
-	private String path;
-	private Boolean first = true;
-		
+	private static TextField auth;
+	private static TextField user;
+	private static TextField location;
+	private static TextField radius;
+	private static TextField autoRefresh;
+	private static TextField ip;
+	private static TextField port;
+	private static PasswordField pass;
+	private static WebEngine webEngine;
+	private static CheckBox gym;
+	private static CheckBox lured;
+	private static TextArea console;
+	private static Stage primaryStage;
+	private static String path;
+	private static Boolean first = true;
+	private static Stage login;
+	private static String exec = "example.py";	
+	private String name;
 	
 	public Buttons(){}
-	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh, WebEngine webEngine, CheckBox gym, CheckBox lured, TextArea console, String path)
+	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh, WebEngine webEngine, CheckBox gym, CheckBox lured, TextArea console, Stage login)
 	{
 		this.auth = auth;
 		this.user = user;
@@ -48,25 +49,41 @@ public class Buttons
 		this.console = console;
 		this.ip = ip;
 		this.port = port;
-		this.path = path;
+		this.login = login;
 	}
 	public Buttons(WebEngine webEngine)
 	{
 		this.webEngine = webEngine;
 	}
-	public Buttons(Stage primaryStage)
+	public Buttons(Stage primaryStage, TextArea console)
 	{
+		this.console = console;
 		this.primaryStage = primaryStage;
 	}
 	public void start()
 	{
-		if (path == null) console.appendText("Kein Dateipfad angegeben!\n");
+		if (path == null) console.appendText("Keinen Dateipfad angegeben!\n");
 		else 
 		{
 		try 
 		{	
 			Pkmn pkmn = new Pkmn(auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path);
-			pkmn.run();
+			if((auth.getText().toUpperCase().equals("PTC"))||(auth.getText().toUpperCase().equals("GOOGLE")))
+				if(user.getText() != null)
+					if(pass.getText().length() != 0)
+						if(location.getText() != null)
+							if(Integer.parseInt(radius.getText()) != 0)
+								if(Integer.parseInt(autoRefresh.getText()) != 0)
+								{
+									pkmn.run();
+									login.close();
+								}
+								else console.appendText("Bitte einen Wert größer 0 eingeben!\n");
+							else console.appendText("Bitte einen Radius größer 0 eingeben!\n");
+						else console.appendText("Bitte Region eingeben!\n");
+					else console.appendText("Bitte Passwort eingeben!\n");
+				else console.appendText("Bitte Account namen eingeben!\n");
+			else console.appendText("Bitte google oder ptc eingeben!\n");
 		}
 		catch(NullPointerException e)
 		{
@@ -78,7 +95,7 @@ public class Buttons
 		}
 		catch (Exception ex) 
 		{
-			Logger.getLogger(Buttons.class.getName()).log(Level.SEVERE, null, ex);
+			System.out.println("something went wrong");
 		}
 		}	
 	}
@@ -115,23 +132,51 @@ public class Buttons
 		{
 			Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		System.exit(0);
-		
-		
+		System.exit(0);		
 	}
-	/*	public void Datei()
+		
+	public void Datei()
+	{
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(primaryStage);
+        if(selectedDirectory == null)
 		{
-			 DirectoryChooser directoryChooser = new DirectoryChooser();
-                File selectedDirectory = 
-                        directoryChooser.showDialog(primaryStage);
-                if(selectedDirectory == null){
-                    console.appendText("No Directory selected\n");
-                }else
+           console.appendText("No Directory selected\n");
+        }
+		else
+		{
+			path = selectedDirectory.getAbsolutePath();
+			File dir = new File(path);
+			FilenameFilter filter = new FilenameFilter() 
+			{
+				public boolean accept
+				(File dir, String name) 
 				{
-                   console.appendText(selectedDirectory.getAbsolutePath()+"\n");
-					//path = selectedDirectory.getAbsolutePath();
-                }  
-		}*/
+					return name.toLowerCase().equals(exec);
+				}
+			};
+			String[] children = dir.list(filter);
+			for (int i=0; i <= children.length-1; i++) 
+			{
+				String filename = children[i];
+				name = filename;
+			}
+			try
+			{
+			if(name.equalsIgnoreCase(exec))
+				{
+					console.appendText(path+"\n");
+					loginView logV = new loginView(path);
+				}
+			}
+			catch(NullPointerException e) 
+			{
+				console.appendText("Keine Datei mit dem Namen: "+exec+" gefunden!\n");
+				Datei();
+			}
+		} 
+	}
+	
 	public String getGym()
 	{
 		String aGym = "";
