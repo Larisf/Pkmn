@@ -103,7 +103,7 @@ public class Buttons
 	{
 		if (first == true)
 		{
-			webEngine.load(ip.getText()+":"+port.getText());
+			webEngine.load("http://"+ip.getText()+":"+port.getText());
 			first = false;
 		}
 		else
