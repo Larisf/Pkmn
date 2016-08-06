@@ -80,7 +80,7 @@ public class loginView extends Stage
 				if(path == null) console.appendText("Keinen Pfad angegeben!\n");
 				else
 				{
-					Buttons btn = new Buttons(auth, user, pass, location, radius, autoRefresh,webEngine, gym, lured,console, login);
+					Buttons btn = new Buttons(auth, user, pass, location, radius, autoRefresh,ip,port,webEngine, gym, lured,console, login);
 					btn.start();
 				}
 			}
@@ -128,5 +128,4 @@ public class loginView extends Stage
 		login.setScene(sc);
 		login.show();
 	}
-	
 }

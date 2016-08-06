@@ -35,7 +35,7 @@ public class Buttons
 	private String name;
 	
 	public Buttons(){}
-	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh, WebEngine webEngine, CheckBox gym, CheckBox lured, TextArea console, Stage login)
+	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh,TextField ip,TextField port, WebEngine webEngine, CheckBox gym, CheckBox lured, TextArea console, Stage login)
 	{
 		this.auth = auth;
 		this.user = user;
@@ -67,7 +67,7 @@ public class Buttons
 		{
 		try 
 		{	
-			Pkmn pkmn = new Pkmn(exec,auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path);
+			Pkmn pkmn = new Pkmn(exec,auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path,port.getText(),ip.getText());
 			if((auth.getText().toUpperCase().equals("PTC"))||(auth.getText().toUpperCase().equals("GOOGLE")))
 				if(user.getText() != null)
 					if(pass.getText().length() != 0)
@@ -103,7 +103,7 @@ public class Buttons
 	{
 		if (first == true)
 		{
-			webEngine.load("http://127.0.0.1:5000");
+			webEngine.load(ip.getText()+":"+port.getText());
 			first = false;
 		}
 		else

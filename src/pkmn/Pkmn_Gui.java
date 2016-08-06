@@ -14,7 +14,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -30,8 +29,6 @@ public class Pkmn_Gui extends Application
 		
 		AnchorPane grid = new AnchorPane();
 		grid.setPadding(new Insets(10.0));
-        //grid.setVgap(5.0);
-        //grid.setHgap(10.0);
 
 		TextArea console = new TextArea(null);
 		WebView browser = new WebView();

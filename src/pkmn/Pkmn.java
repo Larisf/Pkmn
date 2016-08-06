@@ -20,7 +20,7 @@ public class Pkmn
 	private static String exec;
 	private static final String gmapsKey = "AIzaSyCxpcyqb2YUz_Il-DC1H_eucylE64xIL0w" ;
 
-	public Pkmn(String exec,String auth, String user, String password, String location, String steps, String refresh, String bGym, String bLured, TextArea console, String path)
+	public Pkmn(String exec,String auth, String user, String password, String location, String steps, String refresh, String bGym, String bLured, TextArea console, String path, String port, String ip)
 	{
 		this.auth = auth;
 		this.user = user;
@@ -32,6 +32,8 @@ public class Pkmn
 		this.lured = bLured;
 		this.path = path;
 		this.exec = exec;
+		this.ip = ip;
+		this.port = Integer.parseInt(port);
 	}
 	
 	public void run () throws IOException, InterruptedException
