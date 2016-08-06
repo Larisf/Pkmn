@@ -6,19 +6,19 @@ import javafx.scene.control.TextArea;
 
 public class Pkmn
 {
-	private static String auth = null;
-	private static String user = null;
-	private static String password = null;
-	private static String location = null;
-	private static int steps = 0;
-	private static int refresh = 0;
-	private static String ip = "127.0.0.1";
-	private static int port = 5000;
-	private static String gym = null;
-	private static String lured = null;
-	private static String path;
-	private static String exec;
-	private static final String gmapsKey = "AIzaSyCxpcyqb2YUz_Il-DC1H_eucylE64xIL0w" ;
+	private String auth = null;
+	private String user = null;
+	private String password = null;
+	private String location = null;
+	private int steps = 0;
+	private int refresh = 0;
+	private String ip = "127.0.0.1";
+	private int port = 5000;
+	private String gym = null;
+	private String lured = null;
+	private final String path;
+	private final String exec;
+	private static final String GMAPSKEY = "AIzaSyCxpcyqb2YUz_Il-DC1H_eucylE64xIL0w" ;
 
 	public Pkmn(String exec,String auth, String user, String password, String location, String steps, String refresh, String bGym, String bLured, TextArea console, String path, String port, String ip)
 	{
@@ -46,7 +46,7 @@ public class Pkmn
 		out.start();
 	    PrintWriter stdin = new PrintWriter(p.getOutputStream());
 		stdin.println("cd \""+path+"\"");
-		stdin.println("python "+exec+" -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " "+ gym+ " "+ lured + " -sd "+ refresh+" -H "+ip+" -P "+port+" -k " +gmapsKey);
+		stdin.println("python "+exec+" -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " "+ gym+ " "+ lured + " -sd "+ refresh+" -H "+ip+" -P "+port+" -k " +GMAPSKEY);
 		stdin.close(); 
 	}	
 }

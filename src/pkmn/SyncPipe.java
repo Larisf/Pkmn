@@ -18,6 +18,7 @@ public SyncPipe(InputStream istrm, OutputStream ostrm) {
       istrm_ = istrm;
       ostrm_ = ostrm;
   }
+@Override
   public void run() {
       try
       {
@@ -29,7 +30,6 @@ public SyncPipe(InputStream istrm, OutputStream ostrm) {
       }
       catch (Exception e)
       {
-          e.printStackTrace();
       }
   }
   private final OutputStream ostrm_;

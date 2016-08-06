@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -22,7 +21,6 @@ public class Pkmn_Gui extends Application
 {
 	Buttons btn = new Buttons();
 	public Pkmn_Gui(){}
-	private static String path=null;
 	@Override
 	public void start(Stage primaryStage) throws InterruptedException 
 	{
@@ -40,84 +38,60 @@ public class Pkmn_Gui extends Application
 		Menu options = new Menu("Optionen");
 		MenuItem start = new MenuItem("Start");
 		start.setAccelerator(KeyCombination.keyCombination("F4"));
-				start.setOnAction(new EventHandler<ActionEvent>()
-		{
-			public void handle(ActionEvent event)
-			{
-				btn.start();
-			}
+				start.setOnAction((ActionEvent event) -> {
+					btn.start();
 		});
 
 		MenuItem refresh = new MenuItem("Aktualisieren");		
 		refresh.setAccelerator(KeyCombination.keyCombination("F5"));
-		refresh.setOnAction(new EventHandler<ActionEvent>()
-		{
-			public void handle(ActionEvent event)
-			{
-				btn = new Buttons(webEngine);
-				btn.refresh();
-			}
+		refresh.setOnAction((ActionEvent event) -> {
+			btn = new Buttons(webEngine);
+			btn.refresh();
 		});
 		
 		MenuItem stopp = new MenuItem("Stopp");
 		stopp.setAccelerator(KeyCombination.keyCombination("F6"));
-				stopp.setOnAction(new EventHandler<ActionEvent>()
-		{
-			public void handle(ActionEvent event)
-			{
-				try {
-					btn.stopp();
-				} catch (IOException ex) {
-					Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
-				}
-        	}
+				stopp.setOnAction((ActionEvent event) -> {
+					try {
+						btn.stopp();
+					} catch (IOException ex) {
+						Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
+					}
 		});
 		
 		MenuItem quit = new MenuItem("Beenden");
 		quit.setAccelerator(KeyCombination.keyCombination("F12"));
-		quit.setOnAction(new EventHandler<ActionEvent>()
-		{
-			public void handle(ActionEvent event)
-			{
-				try {
-					btn.beenden();
-				} catch (IOException ex) {
-					Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
-				}
-        	}
+		quit.setOnAction((ActionEvent event) -> {
+			try {
+				btn.beenden();
+			} catch (IOException ex) {
+				Logger.getLogger(Pkmn_Gui.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		});
 	
         Menu login = new Menu("Login");
 		MenuItem log = new MenuItem("Login");
-		log.setOnAction(new EventHandler<ActionEvent>() 
-		{     @Override
-            public void handle(ActionEvent event) {
-				loginView loginV = new loginView(primaryStage,webEngine, console);
-
-            }
-        });
+		log.setOnAction((ActionEvent event) -> {
+			loginView loginV = new loginView(primaryStage,webEngine, console);
+		});
  
         Menu dir = new Menu("Ordner");
 		MenuItem choose = new MenuItem("Auswählen");
-		choose.setOnAction(new EventHandler<ActionEvent>() 
-		{     @Override
-            public void handle(ActionEvent event) {
-			   Buttons btn = new Buttons(primaryStage, console);
-               btn.Datei();  
-            }
-    
-        });
+		choose.setOnAction((ActionEvent event) -> {
+			Buttons btn1 = new Buttons(primaryStage, console);
+			btn1.Datei();
+		});
  		
-        grid.setTopAnchor(browser,22.0);
-		grid.setLeftAnchor(browser,0.0);
-		grid.setRightAnchor(browser,0.0);
-		grid.setBottomAnchor(browser,200.0);
-        grid.setBottomAnchor(console,0.0);
-		grid.setLeftAnchor(console,0.0);
-		grid.setRightAnchor(console,0.0);
-		grid.setTopAnchor(menuBar,0.0);
-		grid.setLeftAnchor(menuBar,0.0);
-		grid.setRightAnchor(menuBar,0.0);
+        AnchorPane.setTopAnchor(browser,22.0);
+		AnchorPane.setLeftAnchor(browser,0.0);
+		AnchorPane.setRightAnchor(browser,0.0);
+		AnchorPane.setBottomAnchor(browser,200.0);
+        AnchorPane.setBottomAnchor(console,0.0);
+		AnchorPane.setLeftAnchor(console,0.0);
+		AnchorPane.setRightAnchor(console,0.0);
+		AnchorPane.setTopAnchor(menuBar,0.0);
+		AnchorPane.setLeftAnchor(menuBar,0.0);
+		AnchorPane.setRightAnchor(menuBar,0.0);
 		grid.getChildren().addAll(browser,console);
 
 		options.getItems().addAll(start,refresh,stopp,quit);

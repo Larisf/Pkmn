@@ -31,34 +31,34 @@ public class Buttons
 	private static String path;
 	private static Boolean first = true;
 	private static Stage login;
-	private static final String exec = "runserver.py";	
+	private static final String EXEC = "runserver.py";	
 	private String name;
 	
 	public Buttons(){}
 	public Buttons(TextField auth, TextField user, PasswordField pass, TextField location, TextField radius,TextField autoRefresh,TextField ip,TextField port, WebEngine webEngine, CheckBox gym, CheckBox lured, TextArea console, Stage login)
 	{
-		this.auth = auth;
-		this.user = user;
-		this.location = location;
-		this.radius = radius;
-		this.pass = pass;
-		this.autoRefresh = autoRefresh;
-		this.webEngine = webEngine;
-		this.gym = gym;
-		this.lured = lured;
-		this.console = console;
-		this.ip = ip;
-		this.port = port;
-		this.login = login;
+		Buttons.auth = auth;
+		Buttons.user = user;
+		Buttons.location = location;
+		Buttons.radius = radius;
+		Buttons.pass = pass;
+		Buttons.autoRefresh = autoRefresh;
+		Buttons.webEngine = webEngine;
+		Buttons.gym = gym;
+		Buttons.lured = lured;
+		Buttons.console = console;
+		Buttons.ip = ip;
+		Buttons.port = port;
+		Buttons.login = login;
 	}
 	public Buttons(WebEngine webEngine)
 	{
-		this.webEngine = webEngine;
+		Buttons.webEngine = webEngine;
 	}
 	public Buttons(Stage primaryStage, TextArea console)
 	{
-		this.console = console;
-		this.primaryStage = primaryStage;
+		Buttons.console = console;
+		Buttons.primaryStage = primaryStage;
 	}
 	public void start()
 	{
@@ -67,7 +67,7 @@ public class Buttons
 		{
 		try 
 		{	
-			Pkmn pkmn = new Pkmn(exec,auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path,port.getText(),ip.getText());
+			Pkmn pkmn = new Pkmn(EXEC,auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path,port.getText(),ip.getText());
 			if((auth.getText().toUpperCase().equals("PTC"))||(auth.getText().toUpperCase().equals("GOOGLE")))
 				if(user.getText() != null)
 					if(pass.getText().length() != 0)
@@ -93,7 +93,7 @@ public class Buttons
 		{
 			console.appendText("Bitte gültige Werte eingeben!\n");
 		}
-		catch (Exception ex) 
+		catch (IOException | InterruptedException e) 
 		{
 			System.out.println("something went wrong");
 		}
@@ -147,14 +147,7 @@ public class Buttons
 		{
 			path = selectedDirectory.getAbsolutePath();
 			File dir = new File(path);
-			FilenameFilter filter = new FilenameFilter() 
-			{
-				public boolean accept
-				(File dir, String name) 
-				{
-					return name.toLowerCase().equals(exec);
-				}
-			};
+			FilenameFilter filter = (File dir1, String name1) -> name1.toLowerCase().equals(EXEC);
 			String[] children = dir.list(filter);
 			for (int i=0; i <= children.length-1; i++) 
 			{
@@ -163,7 +156,7 @@ public class Buttons
 			}
 			try
 			{
-			if(name.equalsIgnoreCase(exec))
+			if(name.equalsIgnoreCase(EXEC))
 				{
 					console.appendText(path+"\n");
 					loginView logV = new loginView(path);
@@ -171,7 +164,7 @@ public class Buttons
 			}
 			catch(NullPointerException e) 
 			{
-				console.appendText("Keine Datei mit dem Namen: "+exec+" gefunden!\n");
+				console.appendText("Keine Datei mit dem Namen: "+EXEC+" gefunden!\n");
 				Datei();
 			}
 		} 
@@ -179,7 +172,7 @@ public class Buttons
 	
 	public String getGym()
 	{
-		String aGym = "";
+		String aGym;
 		if(gym.isSelected() == true)
 			aGym = "-dg";
 		else
@@ -188,7 +181,7 @@ public class Buttons
 	}
 	public String getLured()
 	{
-		String aLured ="";
+		String aLured;
 		if(lured.isSelected() ==true)
 			aLured = "-ol";
 		else

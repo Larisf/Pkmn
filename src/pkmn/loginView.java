@@ -6,7 +6,6 @@
 package pkmn;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,12 +31,12 @@ public class loginView extends Stage
 	public loginView(Stage primaryStage, WebEngine webEngine, TextArea console) 
 	{
 			showLoginView(primaryStage);
-			this.console = console;
-			this.webEngine = webEngine;
+			loginView.console = console;
+			loginView.webEngine = webEngine;
 	}	
 	public loginView(String path) 
 	{
-		this.path = path;
+		loginView.path = path;
 	}
 	private void showLoginView(Stage prim)
 	{
@@ -72,29 +71,19 @@ public class loginView extends Stage
 		lured.setDisable(true);
 		
 		Button start = new Button("Login");
-				start.setOnAction(new EventHandler<ActionEvent>()
-		{
-			public void handle(ActionEvent event)
-			{
-				
-				if(path == null) console.appendText("Keinen Pfad angegeben!\n");
-				else
-				{
-					Buttons btn = new Buttons(auth, user, pass, location, radius, autoRefresh,ip,port,webEngine, gym, lured,console, login);
-					btn.start();
-				}
-			}
+				start.setOnAction((ActionEvent event) -> {
+					if(path == null) console.appendText("Keinen Pfad angegeben!\n");
+					else
+					{
+						Buttons btn = new Buttons(auth, user, pass, location, radius, autoRefresh,ip,port,webEngine, gym, lured,console, login);
+						btn.start();
+					}
 		});
 		Button choose = new Button("Ordner wählen");
-		choose.setOnAction(new EventHandler<ActionEvent>() 
-		{     
-			@Override
-            public void handle(ActionEvent event) 
-			{
-				Buttons btn1 = new Buttons(prim, console);
-			    btn1.Datei();     
-			}
-        });
+		choose.setOnAction((ActionEvent event) -> {
+			Buttons btn1 = new Buttons(prim, console);
+			btn1.Datei();
+		});
 
 		
 		
