@@ -52,7 +52,7 @@ public class loginView extends Stage
 		Label l3 = new Label("Passwort: ");
 		Label l4 = new Label("Ort: ");
 		Label l5 = new Label("Radius: ");
-        Label l6 = new Label("Auto-Refresh: ");
+        Label l6 = new Label("Scan-Delay: ");
 		Label l7 = new Label("Ip: ");
 		Label l8 = new Label("Port: ");
 		Label l9 = new Label("Arenen anzeigen: ");
@@ -62,12 +62,14 @@ public class loginView extends Stage
         PasswordField pass = new PasswordField();
 		TextField location = new TextField(null);
 		TextField radius = new TextField("5");
-		TextField autoRefresh = new TextField("3");
+		TextField autoRefresh = new TextField("10");
 		TextField ip = new TextField("127.0.0.1");
 		TextField port = new TextField("5000");
 		
 		CheckBox gym = new CheckBox();
 		CheckBox lured = new CheckBox();
+		gym.setDisable(true);
+		lured.setDisable(true);
 		
 		Button start = new Button("Login");
 				start.setOnAction(new EventHandler<ActionEvent>()

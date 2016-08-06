@@ -13,6 +13,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -27,14 +28,16 @@ public class Pkmn_Gui extends Application
 	public void start(Stage primaryStage) throws InterruptedException 
 	{
 		
-		GridPane grid = new GridPane();
+		AnchorPane grid = new AnchorPane();
 		grid.setPadding(new Insets(10.0));
-        grid.setVgap(5.0);
-        grid.setHgap(10.0);
+        //grid.setVgap(5.0);
+        //grid.setHgap(10.0);
 
 		TextArea console = new TextArea(null);
 		WebView browser = new WebView();
 		WebEngine webEngine =  browser.getEngine();
+		webEngine.setJavaScriptEnabled(true);
+		webEngine.setUserAgent("AppleWebKit/537.44");
 		MenuBar menuBar = new MenuBar();
  
 		Menu options = new Menu("Optionen");
@@ -108,8 +111,17 @@ public class Pkmn_Gui extends Application
     
         });
  		
-        grid.add(browser, 0, 0, 1, 15);
-        grid.add(console,0,16);
+        grid.setTopAnchor(browser,22.0);
+		grid.setLeftAnchor(browser,0.0);
+		grid.setRightAnchor(browser,0.0);
+		grid.setBottomAnchor(browser,200.0);
+        grid.setBottomAnchor(console,0.0);
+		grid.setLeftAnchor(console,0.0);
+		grid.setRightAnchor(console,0.0);
+		grid.setTopAnchor(menuBar,0.0);
+		grid.setLeftAnchor(menuBar,0.0);
+		grid.setRightAnchor(menuBar,0.0);
+		grid.getChildren().addAll(browser,console);
 
 		options.getItems().addAll(start,refresh,stopp,quit);
 		login.getItems().addAll(log);
@@ -117,11 +129,11 @@ public class Pkmn_Gui extends Application
 
         menuBar.getMenus().addAll(options, login, dir);
  
-		console.appendText("Radius: 1 = 200m\nAuto-Refresh: in Sekunden\nRegion: z.B. Adlerweg, Ahaus, Ger\n");
+		console.appendText("Radius: 1 = 200m\nScan-Delay: in Sekunden(Standart: 10)\nRegion: z.B. Adlerweg, Ahaus, Ger\n");
 		console.setEditable(false);
 		Scene scene = new Scene(grid);
  
-        ((GridPane) scene.getRoot()).getChildren().addAll(menuBar);
+        ((AnchorPane) scene.getRoot()).getChildren().addAll(menuBar);
         primaryStage.setTitle("PokemonGo Map");
         primaryStage.setScene(scene);
         primaryStage.show();		

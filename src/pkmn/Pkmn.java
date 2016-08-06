@@ -17,8 +17,10 @@ public class Pkmn
 	private static String gym = null;
 	private static String lured = null;
 	private static String path;
+	private static String exec;
+	private static final String gmapsKey = "AIzaSyCxpcyqb2YUz_Il-DC1H_eucylE64xIL0w" ;
 
-	public Pkmn(String auth, String user, String password, String location, String steps, String refresh, String bGym, String bLured, TextArea console, String path)
+	public Pkmn(String exec,String auth, String user, String password, String location, String steps, String refresh, String bGym, String bLured, TextArea console, String path)
 	{
 		this.auth = auth;
 		this.user = user;
@@ -29,6 +31,7 @@ public class Pkmn
 		this.gym = bGym;
 		this.lured = bLured;
 		this.path = path;
+		this.exec = exec;
 	}
 	
 	public void run () throws IOException, InterruptedException
@@ -41,7 +44,7 @@ public class Pkmn
 		out.start();
 	    PrintWriter stdin = new PrintWriter(p.getOutputStream());
 		stdin.println("cd \""+path+"\"");
-		stdin.println("python example.py -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " "+ gym+ " "+ lured + " -ar "+ refresh+" -H "+ip+" -P "+port);
-		stdin.close();
+		stdin.println("python "+exec+" -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " "+ gym+ " "+ lured + " -sd "+ refresh+" -H "+ip+" -P "+port+" -k " +gmapsKey);
+		stdin.close(); 
 	}	
 }

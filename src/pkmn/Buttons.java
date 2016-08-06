@@ -31,7 +31,7 @@ public class Buttons
 	private static String path;
 	private static Boolean first = true;
 	private static Stage login;
-	private static String exec = "example.py";	
+	private static final String exec = "runserver.py";	
 	private String name;
 	
 	public Buttons(){}
@@ -67,7 +67,7 @@ public class Buttons
 		{
 		try 
 		{	
-			Pkmn pkmn = new Pkmn(auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path);
+			Pkmn pkmn = new Pkmn(exec,auth.getText(),user.getText(),pass.getText(),location.getText(),radius.getText(), autoRefresh.getText(),getGym(),getLured(),console, path);
 			if((auth.getText().toUpperCase().equals("PTC"))||(auth.getText().toUpperCase().equals("GOOGLE")))
 				if(user.getText() != null)
 					if(pass.getText().length() != 0)
