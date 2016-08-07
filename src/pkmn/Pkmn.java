@@ -46,7 +46,7 @@ public class Pkmn
 		out.start();
 	    PrintWriter stdin = new PrintWriter(p.getOutputStream());
 		stdin.println("cd \""+path+"\"");
-		stdin.println("python "+exec+" -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " "+ gym+ " "+ lured + " -sd "+ refresh+" -H "+ip+" -P "+port+" -k " +GMAPSKEY);
+		stdin.println("python "+exec+" -a "+ auth + " -u "+ user + " -p " + password + " -l " + "\""+ location + "\"" + " -st " + steps + " "+ gym+ " "+ lured + " -ar "+ refresh+" -H "+ip+" -P "+port/*+" -k " +GMAPSKEY*/);
 		stdin.close(); 
 	}	
 }
